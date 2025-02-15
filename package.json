@@ -32,6 +32,22 @@
     "eject": "react-scripts eject",
     "heroku-postbuild": "npm run build"
   },
+  "proxy": {
+    "/api1": {
+      "target": "https://asterheng-github-io.onrender.com",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api1": ""
+      }
+    },
+    "/api2": {
+      "target": "https://fyp-37p-api-a16b479cb42b.herokuapp.com",
+      "changeOrigin": true,
+      "pathRewrite": {
+        "^/api2": ""
+      }
+    }
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
