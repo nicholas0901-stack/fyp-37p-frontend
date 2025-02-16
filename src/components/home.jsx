@@ -15,6 +15,8 @@ function Home() {
   const [currentBids, setCurrentBids] = useState({}); // To store the current bid for each listing
   const [results, setResults] = useState([]);
   const [selectedImageIndex, setSelectedImageIndex] = useState(0);
+  const [dutchPrices, setDutchPrices] = useState(0); // Store dynamic prices for Dutch auctions
+
   // Chatbot States
   const user_name = sessionStorage.getItem("user_name"); // Retrieve recovery key from sessionStorage
   const [isChatOpen, setIsChatOpen] = useState(false);
@@ -229,6 +231,10 @@ function Home() {
 
     return () => clearTimeout(timeoutId); // Clear timeout on unmount
   }, []);
+  // ✅ Update Dutch Auction Prices Dynamically
+  useEffect(() => {
+    const updateDutchPrices = () => {
+      const updatedPrices = {};
 
   return (
     <>
@@ -506,7 +512,6 @@ function Home() {
                     <strong>Auction Type:</strong>{" "}
                     {selectedListing.auction_strategy}
                   </p>
-
                   {/* Buttons Section - Ensuring Single Row Alignment */}
                   <div className="d-flex justify-content-between mt-3 gap-2">
                     {/* Close Button */}
@@ -526,7 +531,7 @@ function Home() {
                         description: selectedListing.description,
                         auction_strategy: selectedListing.auction_strategy,
                         minimum_bid: selectedListing.minimum_bid,
-		        minimum_increment: selectedListing.minimum_increment,
+                        minimum_increment: selectedListing.minimum_increment,
                         buy_now: selectedListing.buy_now,
                         start_at: selectedListing.start_at,
                         end_at: selectedListing.end_at,

@@ -352,6 +352,7 @@ export default function SellerViewAListing() {
     }
   };
 
+<<<<<<< HEAD
   return (
     <form onSubmit={handleSubmit}>
       <Box id="CreateListing" sx={{ padding: 3 }}>
@@ -639,6 +640,37 @@ export default function SellerViewAListing() {
                     </Grid>
                 </Grid>
 =======
+=======
+  const endDatePassed = new Date() > new Date(formData.end_at);
+  console.log("Current Date:", new Date());
+  console.log("Auction End Date:", new Date(formData.end_at));
+  console.log("Has Auction Ended?:", new Date() > new Date(formData.end_at));
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <Box id="CreateListing" sx={{ padding: 3 }}>
+        <Grid container spacing={3}>
+          <Grid item xs={12} md={4}>
+            <Box
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                padding: 2,
+                border: "1px solid #ddd",
+                borderRadius: 2,
+                boxShadow: 2,
+              }}
+            >
+              <FormLabel sx={{ fontSize: "1.50rem" }}>Item Image</FormLabel>
+              <ImageSlider
+                images={formData.image_urls}
+                onImageChange={handleImageChange}
+                onDeleteImage={handleDeleteImage}
+                onUploadImage={handleUploadImage}
+              />
+
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
               <Box sx={{ textAlign: "center", marginTop: "10px" }}>
                 <input
                   type="file"
@@ -650,7 +682,10 @@ export default function SellerViewAListing() {
                   <Box sx={{ paddingBottom: "60px" }}></Box>
                 </label>
               </Box>
+<<<<<<< HEAD
 >>>>>>> 8685ca16a446efecf7a9a10b1f90b3d9aa0411a4
+=======
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
             </Box>
           </Grid>
 
@@ -787,8 +822,14 @@ export default function SellerViewAListing() {
                 required
                 sx={{ fontSize: "1.30rem", paddingTop: "5px" }}
               >
+<<<<<<< HEAD
                 {formData.auction_strategy === "Sealed-Bid"
                   ? "Disabled for Sealed-Bid auction"
+=======
+                {formData.auction_strategy === "Sealed-Bid" ||
+                formData.auction_strategy === "Dutch"
+                  ? "Disabled for Sealed-Bid & Dutch auction"
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
                   : formData.auction_strategy === "Dutch"
                   ? "Min Bid Decrement"
                   : "Min Bid Increment"}
@@ -802,7 +843,14 @@ export default function SellerViewAListing() {
                 sx={{ fontSize: "1.30rem" }}
                 value={formData.minimum_increment}
                 onChange={handleChange}
+<<<<<<< HEAD
                 disabled={formData.auction_strategy === "Sealed-Bid"}
+=======
+                disabled={
+                  formData.auction_strategy === "Sealed-Bid" ||
+                  formData.auction_strategy === "Dutch"
+                }
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
               />
 
               <FormLabel
@@ -883,11 +931,24 @@ export default function SellerViewAListing() {
               <Button
                 sx={{
                   fontSize: "1.35rem",
+<<<<<<< HEAD
                   backgroundColor: "#0d6efd",
                   color: "white",
                 }}
                 type="submit"
                 csize="small"
+=======
+                  backgroundColor: endDatePassed ? "gray" : "#0d6efd",
+                  color: endDatePassed ? "white" : "white",
+                  cursor: endDatePassed ? "not-allowed" : "pointer",
+                  "&:hover": {
+                    backgroundColor: endDatePassed ? "gray" : "#0056b3",
+                  }, // Darker blue on hover if active
+                }}
+                type="submit"
+                size="small"
+                disabled={endDatePassed} // Disable button if auction ended
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
               >
                 Save Changes
               </Button>

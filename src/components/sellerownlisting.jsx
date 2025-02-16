@@ -257,6 +257,7 @@ function Section({ title, list, type, navigate, setListings, listings }) {
       }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     const handleButtonClick = (id, type) => {
         if (type === "current") {
           // Handle view action
@@ -267,23 +268,103 @@ function Section({ title, list, type, navigate, setListings, listings }) {
           // Handle delete action
           console.log("Deleting auction with ID:", id);
           handleDeleteClick(id);  // Your existing delete handler
+=======
+      // Step 2: After successfully deleting all images, delete the listing
+      const deleteListingResponse = await fetch(
+        `https://fyp-37p-api-a16b479cb42b.herokuapp.com/listing/delete/${listingId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${sessionStorage.getItem("token") || ""}`,
+          },
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
         }
-      };
-    
-    return (
-        <Container id="SAuctionListings" sx={{ display: 'flex', flexDirection: 'column',  m:0 }}>
-            <Box sx={{ textAlign: 'center', width: '100%' }}>
-                <Typography component="h1" variant="h4" gutterBottom sx={{ fontSize: '2.50rem' }}>
-                    {title}
-                </Typography>
-            </Box>
-            {/* Snackbar for Auto-Closing Notification */}
-            <Snackbar
-                open={openSnackbar}
-                autoHideDuration={3000} // Close after 3 seconds
-                onClose={() => setOpenSnackbar(false)}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+      );
+
+      const deleteListingData = await deleteListingResponse.json();
+      console.log("Delete Listing Response:", deleteListingData);
+
+      if (!deleteListingResponse.ok) {
+        alert(deleteListingData.error || "Failed to delete the listing");
+        return;
+      }
+
+      // Notify the user and update the listings
+      setOpenSnackbar(true);
+      setListings((prevListings) =>
+        prevListings.filter((item) => item.id !== listingId)
+      );
+    } catch (error) {
+      console.error("Error deleting image or listing:", error);
+      alert("An error occurred while deleting the image or listing");
+    }
+  };
+
+  const handleButtonClick = (id, type) => {
+    if (type === "current") {
+      // Handle view action
+      console.log("Viewing auction with ID:", id);
+      // You can navigate to the auction page or perform other actions
+      navigate(`/SellerMonitorBids/${id}`);
+    } else {
+      // Handle delete action
+      console.log("Deleting auction with ID:", id);
+      handleDeleteClick(id); // Your existing delete handler
+    }
+  };
+
+  return (
+    <Container
+      id="SAuctionListings"
+      sx={{ display: "flex", flexDirection: "column", m: 0 }}
+    >
+      <Box sx={{ textAlign: "center", width: "100%" }}>
+        <Typography
+          component="h1"
+          variant="h4"
+          gutterBottom
+          sx={{ fontSize: "2.50rem" }}
+        >
+          {title}
+        </Typography>
+      </Box>
+      {/* Snackbar for Auto-Closing Notification */}
+      <Snackbar
+        open={openSnackbar}
+        autoHideDuration={3000} // Close after 3 seconds
+        onClose={() => setOpenSnackbar(false)}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+      >
+        <Alert
+          onClose={() => setOpenSnackbar(false)}
+          severity="success"
+          sx={{
+            fontSize: "1.5rem", // Adjust font size
+            padding: "12px", // Add more spacing
+          }}
+        >
+          Listing deleted successfully!
+        </Alert>
+      </Snackbar>
+      <Grid
+        container
+        spacing={4}
+        sx={{ width: "100%", justifyContent: "flex-start", m: 0 }}
+      >
+        {list.map((item, index) => (
+          <Grid item xs={12} sm={4} md={4} key={index} sx={{ display: "flex" }}>
+            <Card
+              variant="outlined"
+              sx={{
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
+                flexGrow: 1,
+                width: "100%",
+              }}
             >
+<<<<<<< HEAD
                 <Alert onClose={() => setOpenSnackbar(false)} severity="success" 
                     sx={{
                         fontSize: '1.5rem',  // Adjust font size
@@ -473,6 +554,56 @@ function Section({ title, list, type, navigate, setListings, listings }) {
                 >
                   View Details
                 </button>
+=======
+              <CardContent>
+                <Box
+                  component="img"
+                  src={
+                    Array.isArray(item.image_urls) && item.image_urls.length > 0
+                      ? item.image_urls[0]
+                      : ""
+                  }
+                  alt={item.title}
+                  sx={{
+                    width: "100%",
+                    height: "300px",
+                    objectFit: "cover",
+                    borderRadius: "2px",
+                    border: "2px solid grey",
+                  }}
+                />
+              </CardContent>
+              <CardHeader
+                title={item.title}
+                subheader={getSubheader(item, type)}
+                sx={{
+                  ".MuiCardHeader-title": {
+                    fontSize: "2rem",
+                    fontWeight: "bold",
+                  },
+                  ".MuiCardHeader-subheader": {
+                    fontSize: "1.35rem",
+                    width: "100%",
+                  },
+                }}
+              />
+              <Box sx={{ p: 2, display: "flex", justifyContent: "center" }}>
+                {type !== "current" && (
+                  <button
+                    className="btn btn-primary"
+                    style={{
+                      borderRadius: "30px",
+                      width: "100%",
+                    }}
+                    onClick={() =>
+                      navigate(`/sellerviewalistingpage/${item.id}`)
+                    }
+                  >
+                    View Details
+                  </button>
+                )}
+
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
                 <button
                   className="btn btn-primary"
                   style={{
@@ -480,16 +611,25 @@ function Section({ title, list, type, navigate, setListings, listings }) {
                     width: "100%",
                     backgroundColor: "grey",
                   }}
+<<<<<<< HEAD
                   onClick={() => handleDeleteClick(item.id)}
                 >
                   Delete
+=======
+                  onClick={() => handleButtonClick(item.id, type)}
+                >
+                  {type === "current" ? "View" : "Delete"}
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
                 </button>
               </Box>
             </Card>
           </Grid>
         ))}
       </Grid>
+<<<<<<< HEAD
 >>>>>>> 8685ca16a446efecf7a9a10b1f90b3d9aa0411a4
+=======
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
 
       <Dialog open={open} onClose={() => setOpen(false)}>
         <DialogTitle sx={{ fontSize: "2rem", fontWeight: "bold" }}>

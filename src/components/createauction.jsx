@@ -127,7 +127,12 @@ export default function CreateAuction() {
       [name]: value,
       // Ensure min bid increment is set to 0 if auction strategy is "Sealed-Bid"
       minimum_increment:
+<<<<<<< HEAD
         name === "auction_strategy" && value === "Sealed-Bid"
+=======
+        name === "auction_strategy" &&
+        (value === "Sealed-Bid" || value === "Dutch")
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
           ? 0
           : prevState.minimum_increment,
     }));
@@ -166,6 +171,7 @@ export default function CreateAuction() {
       );
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     const handleChange = (event) => {
         const { name, value, files } = event.target;
         setFormData((prevState) => ({
@@ -179,6 +185,11 @@ export default function CreateAuction() {
         throw new Error(`HTTP error! Status: ${response.status}`);
       }
 >>>>>>> 8685ca16a446efecf7a9a10b1f90b3d9aa0411a4
+=======
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
 
       const responseData = await response.json();
       console.log("Success:", responseData);
@@ -218,11 +229,22 @@ export default function CreateAuction() {
       formDataToUpload.append("image", file); // Ensure this is a File object
 
       try {
+<<<<<<< HEAD
         const response = await fetch("api2/listing/upload_image", {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` }, // No 'Content-Type' for FormData
           body: formDataToUpload,
         });
+=======
+        const response = await fetch(
+          "https://fyp-37p-api-a16b479cb42b.herokuapp.com/listing/upload_image",
+          {
+            method: "POST",
+            headers: { Authorization: `Bearer ${token}` }, // No 'Content-Type' for FormData
+            body: formDataToUpload,
+          }
+        );
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
 
         if (!response.ok) {
           throw new Error(`Failed to upload image. Status: ${response.status}`);
@@ -413,6 +435,7 @@ export default function CreateAuction() {
               />
             </FormGrid>
 
+<<<<<<< HEAD
             {formData.auction_strategy !== "Sealed-Bid" && (
               <FormGrid item xs={12} md={4}>
                 <FormLabel sx={{ fontSize: "1.30rem" }} htmlFor="min-bid">
@@ -441,6 +464,35 @@ export default function CreateAuction() {
                 {formData.auction_strategy === "Dutch"
                   ? "Buy Now Price (value to be same as Starting Price)"
                   : "Buy Now Price (value to be higher than Starting Price)"}
+=======
+            {formData.auction_strategy !== "Sealed-Bid" &&
+              formData.auction_strategy !== "Dutch" && (
+                <FormGrid item xs={12} md={4}>
+                  <FormLabel sx={{ fontSize: "1.30rem" }} htmlFor="min-bid">
+                    {formData.auction_strategy === "Dutch"
+                      ? "Min Bid Decrement"
+                      : "Min Bid Increment"}
+                  </FormLabel>
+                  <OutlinedInput
+                    id="min-bid"
+                    name="minimum_increment"
+                    type="number"
+                    placeholder="USD $"
+                    required
+                    size="small"
+                    sx={{ fontSize: "1.30rem" }}
+                    inputProps={{ min: 0 }}
+                    value={formData.minimum_increment}
+                    onChange={handleChange}
+                    disabled={formData.auction_strategy === "Sealed-Bid"}
+                  />
+                </FormGrid>
+              )}
+
+            <FormGrid item xs={12} md={4}>
+              <FormLabel sx={{ fontSize: "1.30rem" }} htmlFor="buy-price">
+                Buy Now Price
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
               </FormLabel>
               <OutlinedInput
                 id="buy-price"
@@ -488,6 +540,7 @@ export default function CreateAuction() {
         </Grid>
       </Grid>
 
+<<<<<<< HEAD
 <<<<<<< HEAD
                             <FormGrid item xs={12} md={6}>
                                 <FormLabel sx={{ fontSize: '1.30rem' }} htmlFor="item-type">Category</FormLabel>
@@ -657,6 +710,8 @@ export default function CreateAuction() {
         </form>
     );
 =======
+=======
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
       {/* Submit & Cancel Buttons */}
       <Box
         sx={{
@@ -705,5 +760,8 @@ export default function CreateAuction() {
       </Snackbar>
     </form>
   );
+<<<<<<< HEAD
 >>>>>>> 8685ca16a446efecf7a9a10b1f90b3d9aa0411a4
+=======
+>>>>>>> 2037e27f8dfdfc849f7863716ae0efb426ac303f
 }
