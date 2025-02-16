@@ -230,7 +230,7 @@ export default function CreateAuction() {
 
       try {
 <<<<<<< HEAD
-        const response = await fetch("api2/listing/upload_image", {
+        const response = await fetch("https://fyp-37p-api-a16b479cb42b.herokuapp.com/listing/upload_image", {
           method: "POST",
           headers: { Authorization: `Bearer ${token}` }, // No 'Content-Type' for FormData
           body: formDataToUpload,
